@@ -2,6 +2,6 @@ package com.yedam.app.emp.mapper;
 
 public interface EmpMapper {
 
-//	public List<EmpVO> selectEmpList();
+//	public List<EmpVO> selectEmpList();ㅇㄹㅇ
 
 }
