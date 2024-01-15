@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.app.emp.mapper.EmpMapper">
+
+	<!-- 전체조회 -->
+	<select id="selectEmpList" resultType="EmpVO">
+		select employee_id
+		,last_name
+		,email
+		,hire_date
+		,job_id
+		,salary
+
+		from employees
+		order by
+		employee_id
+	</select>
+
+
+	<!-- 단건조회 $ = '' 다빼고.. #은 자기가 알아서 해준대 -->
+	<select id="selectEmpInfo" resultType="EmpVO">
+		select employee_id,
+		last_name 
+		,email
+		,hire_date 
+		,job_id 
+		,salary
+		from
+		employees
+		where employee_id =#{employeeId}
+		<!-- =#{employeeId} >>객체의 필드값 ++ㅌ -->
+		<!-- column LIKE '%' ||#{field}||'%' -->
+		<!-- column LIKE '%${field}%' -->
+	</select>
+
+	<!-- 등록 -->
+	<insert id="insertEmpInfo" parameterType="EmpVO">
+		<selectKey keyProperty="employeeId" resultType="int"
+			order="BEFORE">
+			select nvl(max(employee_id), 0)+1
+			from employees
+		</selectKey>  <!-- selectkey 의 결과는 1컬럼 1값 select문 수행 결과를 parameterType="EmpVO"> 안에 담음.. 
+			keyProperty="employeeId" 값을 담을 필드 명 // order="BEFORE" >>실행순서.. select 문 실행되고 
+			> insert문 실행 뭔소리지 -->
+
+		insert into employees(
+		employee_id
+		,last_name
+		,email
+		,hire_date
+		,job_id
+		,salary
+		)
+
+		values (
+		#{employeeId}
+		,#{lastName}
+		,#{email}
+		,#{hireDate}
+		,#{jobId}
+		,#{salary}
+		)
+	</insert>
+
+	<!-- 수정 전제조건 : 수정 여부와 상관없이 전체 데이터가 넘어와야한다 -->
+	<update id="updateEmpInfo" parameterType="EmpVO">
+		update employees
+		set
+		last_name = #{lastName},
+		email = #{email},
+		salary = #{salary}
+		where
+		employee_id = #{employeeId}
+	</update>
+
+
+	<!-- 수정 : 변경된 데이터만 전송  주의해서 쓸 것..-->
+	<update id="updateEmpInfoDynamic" parameterType="EmpVO">
+		update employees
+		set	<!-- 데이터 타입에 따라 조건이 달라짐... string의 경우 .. -->
+
+		<choose> <!-- 다중 if문 -->
+			<when test="lastName !=null and !lastName.equals('')">
+				last_name = #{lastName}
+			</when>
+			<otherwise>
+				last_name='Any'
+			</otherwise>
+		</choose>
+
+
+		<if test="email != null">
+			, email = #{email}   <!-- , 위치 중요함  -->
+		</if>
+
+		<if test="salary >= 0">
+			, salary = #{salary}
+		</if>
+
+		<where>   <!-- employeeID= -1 이라고 넘어가면 where 절은 존재하지 않음 전체조회/조건있는 조회의 경우 2개의 sql문을 
+				만들지 않아도 됨 -->
+			<if test="employeeId > 0">
+				employee_id= #{employeeId}
+			</if>
+		</where>
+	</update>
+
+
+
+	<!-- 매개변수 2개인 경우 -->
+	<update id="updateEmpSal">
+		update employees
+		set salary = salary * #{info.salary}  <!-- @Param("info") EmpVO empVO >> 객체.내부필드값); -->
+		where employee_id = #{eid}
+	</update>
+
+
+	<!-- 삭제 -->
+	<delete id="deleteEmpInfo" parameterType="int">
+
+		delete from employees
+		where employee_id= #{eid} 	<!-- 파라미터타입이 객체한건일때만 #{필드명}, 
+			삭제의 경우 public int deleteEmpInfo(int empId); 매개변수가 하나임 이름 상관없음.. -->
+
+	</delete>
+
+</mapper>
+  
