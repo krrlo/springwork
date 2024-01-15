@@ -37,6 +37,7 @@ public class MapperTest {
 		empVO.setEmployeeId(100);
 		EmpVO findVO = empMapper.selectEmpInfo(empVO);
 		assertEquals(findVO.getLastName(), "King");
+		// 두 값 비교해서 같으면 true
 	}
 
 	// 등록
@@ -59,7 +60,7 @@ public class MapperTest {
 	// @Test
 	public void updateInfo() {
 		EmpVO empVO = new EmpVO();
-		empVO.setEmployeeId(208);
+		empVO.setEmployeeId(1001);
 		// 원데이터를 먼저가져와서
 		EmpVO findVO = empMapper.selectEmpInfo(empVO);
 		// 가져온 데이터에 이름을 변경, 업데이트진행
@@ -68,14 +69,16 @@ public class MapperTest {
 		assertNotEquals(result, 0);
 	}
 
-	// 특정한 조건을 만족할때만 모아서 쿼리문 만든다는데 무슨말인ㄴ지..
+	//
 	@Test
 	public void updateInfoDynamic() {
+		// 객체생성
 		EmpVO empVO = new EmpVO();
-		empVO.setEmployeeId(208);
+		// 값 집어넣기
+		empVO.setEmployeeId(1000);
 		empVO.setSalary(5200);
-		// last_name = any가 들어가게됨
 		int result = empMapper.updateEmpInfoDynamic(empVO);
+		// last_name = any가 들어가게됨
 		assertNotEquals(result, 0);
 	}
 
