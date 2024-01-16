@@ -1,36 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	<context:property-placeholder
-		location="classpath:database.properties" />
-	<!-- datasource connection pool -->
-	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName" value="${dbDriver}" />
-		<property name="jdbcUrl" value="${dbUrl}" />
-		<property name="username" value="${dbId}" />
-		<property name="password" value="${dbPwd}" />
-	</bean>
 
-	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
-		destroy-method="close">
-		<constructor-arg ref="hikariConfig" />
-	</bean>
-
-	<!-- mybatis SqlSessionFactory -->
-	<bean class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation" value="classpath:mybatis-config.xml"/>  <!-- config 파일 자체를 등록 -->
-		<!-- mapperLocation 얘의 유무에 따라서 뭐가 달라진다는데 무슨 소리지? 얘를 설정안해서 지금 이방식 쓰는거래............... -->
-	</bean>
-
-	<!-- mapper scan  빈을 등록하는거래...무슨소리일까..루트/기능/매퍼-->
-	<mybatis-spring:scan
-		base-package="com.yedam.app.**.mapper" />
 </beans>

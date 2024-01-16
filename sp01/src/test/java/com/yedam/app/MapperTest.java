@@ -24,7 +24,7 @@ public class MapperTest {
 	EmpMapper empMapper;
 
 	// 전체조회
-	// @Test
+	@Test
 	public void selectAll() {
 		List<EmpVO> list = empMapper.selectEmpList();
 		assertTrue(!list.isEmpty());
@@ -70,7 +70,7 @@ public class MapperTest {
 	}
 
 	//
-	@Test
+	// @Test
 	public void updateInfoDynamic() {
 		// 객체생성
 		EmpVO empVO = new EmpVO();
