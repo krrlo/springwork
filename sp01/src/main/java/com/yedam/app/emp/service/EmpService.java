@@ -14,7 +14,7 @@ public interface EmpService {
 	// 등록
 	public int insertEmpInfo(EmpVO empVO);
 
-	// 수정
+	// 수정 //필요한 애만 수정하려고
 	public Map<String, Object> updateEmpInfo(EmpVO empVO);
 
 	// 삭제

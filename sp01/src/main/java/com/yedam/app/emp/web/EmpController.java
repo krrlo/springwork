@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yedam.app.emp.service.EmpService;
@@ -31,9 +32,9 @@ public class EmpController {
 	// Model: req, resp 동시에 처리할 수 있도록 스프링에서 제공하는 객체
 	public String getEmpList(Model model) {
 		List<EmpVO> list = empService.getEmpAll();
-		model.addAttribute("empList", list);
+		model.addAttribute("empList", list); // jsp파일로 보냄
 		// servlet-context.xml에서 prefix, suffix 만나서 /WEB-INF/views/emp/empList.jsp 로 변경
-		return "emp/empList"; // 프론트로 리턴
+		return "emp/empList"; // 프론트로 리턴 , jsp파일로 보냄
 	}
 
 //	사원 조회
@@ -71,10 +72,11 @@ public class EmpController {
 		return path;
 	}
 
-//	사원 수정 - PROCESS: Ajax => @ResponseBody 사용(쿼리스트링, JSON 둘 다 가능)
-//	1) 쿼리스트링 (매개변수: 커맨드 객체)
+//	사원 수정 - PROCESS: ****Ajax => @ResponseBody 사용(쿼리스트링, JSON 둘 다 가능)
+	// 아작스 기반으로 요청하고 성공/실패 가림
+//	1) 쿼리스트링형태로 데이터가 넘어온다면.. (매개변수: 커맨드 객체 > empvo)
 	@PostMapping("empUpdate")
-	@ResponseBody
+	@ResponseBody // ajax용
 	public Map<String, Object> empUpdateProcess(EmpVO empVO) {
 		return empService.updateEmpInfo(empVO);
 	}
@@ -87,6 +89,12 @@ public class EmpController {
 	}
 
 //	사원 삭제 - PROCESS
-//	이건 오늘 X
+// 기본적으로 post 
+
+	@GetMapping("empDelete")
+	public String empDelete(@RequestParam Integer eid) {
+		empService.deleteEmpInfo(eid);
+		return "redirect:empList"; // 전체조회로 돌아가기
+	}
 
 }
