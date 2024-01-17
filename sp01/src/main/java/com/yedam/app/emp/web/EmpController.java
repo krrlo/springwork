@@ -46,7 +46,7 @@ public class EmpController {
 	}
 
 //	동일 경로에 두가지의 기능 (GET, POST)
-//	사원 등록 - FORM
+//	사원 등록 - FORM  //등록화면만 띄워줌 
 	@GetMapping("empInsert")
 	public String insertEmpInfoForm() {
 		return "emp/empInsert";
@@ -81,7 +81,7 @@ public class EmpController {
 		return empService.updateEmpInfo(empVO);
 	}
 
-//	2) JSON (매개변수: @RequestBody)
+//	2) JSON 타입으로 데이터가 넘어온다면.. (매개변수: @RequestBody)
 	@PostMapping("empUpdateAjax")
 	@ResponseBody
 	public Map<String, Object> empUpdateAjaxProcess(@RequestBody EmpVO empVO) {
