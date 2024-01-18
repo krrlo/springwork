@@ -6,7 +6,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd">
-		
+
 	<!-- DB 관련 context -->
 	<context:property-placeholder
 		location="classpath:database.properties" />
@@ -28,6 +28,9 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation"
 			value="classpath:mybatis-config.xml" />
+		<!-- mapperLocation 쓴다면 이렇게 쓴대..-->
+		<!-- <property name="mapperLocations"
+		value="*classpath:mapper/*.xml"></property> -->
 	</bean>
 
 	<!-- mapper scan -->

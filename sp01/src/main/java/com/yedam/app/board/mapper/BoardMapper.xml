@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.yedam.app.board.mapper.BoardMapper">
+
+
+	<!-- 전체조회  order by 절 필수로 쓸 것,, -->
+
+	<select id="selectBoardList" resultType="BoardVO">
+		select bno
+		,title
+		,contents
+		,writer
+		,regdate
+		,updatedate
+		,image
+		from tbl_board_01
+		order by bno  
+	</select>
+
+	<!-- 단건조회  #{bno} >>객체 내부 필드명으로 쓸 것 ..-->
+
+	<select id="selectBoard" resultType="BoardVO">
+
+		select bno
+		,title
+		,contents
+		,writer
+		,regdate
+		,updatedate
+		,image
+		from tbl_board_01
+		where bno = #{bno}
+
+	</select>
+
+	<!-- 등록  nvl(max(bno), 0)+1  그룹함수(max)는 데이터가 없으면 null을 반환..? -->
+
+	<insert id="insertBoard" parameterType="BoardVO">
+		<selectKey keyProperty="bno" resultType="Integer" order="BEFORE">
+			select
+			nvl(max(bno), 0)+1
+			from tbl_board_01
+		</selectKey>
+
+		insert into tbl_board_01(
+		bno
+		,title
+		,contents
+		,writer
+		,image
+		)
+
+		values (
+		#{bno}
+		,#{title}
+		,#{contents}
+		,#{writer}
+		,#{image}
+		)
+	</insert>
+
+
+	<!-- 수정 -->
+
+	<update id="updateBoard" parameterType="BoardVO">
+		update tbl_board_01
+		set
+		title = #{title},
+		contents =#{contents},
+		writer =#{writer},
+		updatedate =sysdate,
+		image =#{image}
+		where bno = #{bno}
+
+	</update>
+
+
+	<!-- 삭제 -->
+	<delete id="deleteBoard" parameterType="int">
+		delete from tbl_board_01
+		where bno= #{bno}
+	</delete>
+
+</mapper>
+	

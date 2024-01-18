@@ -17,16 +17,19 @@ public class EmpServiceImpl implements EmpService {
 	@Autowired
 	EmpMapper empMapper;
 
+	// 전체조회
 	@Override
 	public List<EmpVO> getEmpAll() {
 		return empMapper.selectEmpList();
 	}
 
+	// 단건조회
 	@Override
 	public EmpVO getEmpInfo(EmpVO empVO) {
 		return empMapper.selectEmpInfo(empVO);
 	}
 
+	// 등록
 	@Override
 	public int insertEmpInfo(EmpVO empVO) {
 		int result = empMapper.insertEmpInfo(empVO);
@@ -38,6 +41,7 @@ public class EmpServiceImpl implements EmpService {
 		}
 	}
 
+	// 수정
 	@Override
 	public Map<String, Object> updateEmpInfo(EmpVO empVO) {
 		Map<String, Object> map = new HashMap<>();
@@ -55,6 +59,7 @@ public class EmpServiceImpl implements EmpService {
 		return map;
 	}
 
+	// 삭제
 	@Override
 	public boolean deleteEmpInfo(int empId) {
 		int result = empMapper.deleteEmpInfo(empId);
