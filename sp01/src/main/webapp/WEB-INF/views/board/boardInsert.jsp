@@ -37,7 +37,7 @@ pageEncoding="UTF-8"%>
 
   document
     .querySelector('form[name="insertForm"]')
-    .removeEventListener("submit", boardInsertJs); //submit도 이벤트임.
+    .removeEventListener("submit", boardInsertJs); //이벤트 제거 
 
   function boardInsertJs(event) {
     event.preventDefault(); //submit을 일단 멈춤
