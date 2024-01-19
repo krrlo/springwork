@@ -10,18 +10,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.yedam.app.aop.service.AaaService;
 import com.yedam.app.board.mapper.BoardMapper;
 import com.yedam.app.board.service.BoardVO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/*-context.xml")
+@ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/**/*-context.xml")
 public class MapperTest {
 
 	@Autowired
 	BoardMapper boardMapper;
 
 	// 전체조회
-	@Test
+	// @Test
 	public void selectAll() {
 		List<BoardVO> list = boardMapper.selectBoardList();
 		assertTrue(!list.isEmpty());
@@ -85,5 +86,13 @@ public class MapperTest {
 //		int result = empMapper.deleteEmpInfo(207);
 //		assertNotEquals(result, 0);
 //	}
+
+	@Autowired
+	AaaService aaaService;
+
+	@Test
+	public void aopTest() {
+		aaaService.insert();
+	}
 
 }

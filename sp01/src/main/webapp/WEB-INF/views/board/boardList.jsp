@@ -18,6 +18,7 @@
 		<tbody>
 			<c:forEach items="${boardList}" var="board" varStatus="sts">
 				<tr onclick="location.href='boardInfo?bno=${board.bno}'"> 
+				
 					<td>${board.bno}</td>
 					<td>${board.title}</td>
 					<td>${board.writer}</td>

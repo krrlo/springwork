@@ -26,6 +26,12 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<!-- 멀티파트.. 첨부파일..  1. 파일당 최대크기 2. 3. 0 = 임시저장소에 다 넣었다가 처리. 램에 저장하지 않고..  -->
+		<multipart-config>
+			<max-file-size>20971520</max-file-size>
+			<max-request-size>20971520</max-request-size>
+			<file-size-threshold>0</file-size-threshold>
+		</multipart-config>
 	</servlet>
 
 	<servlet-mapping>
@@ -48,5 +54,8 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	
+	
 
 </web-app>

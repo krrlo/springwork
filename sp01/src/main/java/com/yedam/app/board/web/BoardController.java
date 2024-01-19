@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yedam.app.board.service.BoardService;
@@ -63,16 +65,28 @@ public class BoardController {
 	}
 
 	// 수정페이지 요청
+	// 단건조회 페이지와 동일 , 입력태그만 변경
 	@GetMapping("boardUpdate")
-	public String updateBoardInfoForm() {
+	public String boardUpdateForm(BoardVO boardVO, Model model) {
+		BoardVO findVO = boardService.getBoardInfo(boardVO);
+		model.addAttribute("boardInfo", findVO);
 		return "board/boardUpdate";
 	}
 
-	// 수정처리
+	// 수정처리 ajax / 페이지 리턴 x => ajax용도임 .. @requestbody : 제이슨 타입을 요구
 	@PostMapping("boardUpdate")
-	@ResponseBody
-	public Map<String, Object> boardUpdateProcess(BoardVO boardVO) {
-		return boardService.updateBoardInfo(boardVO); // >map이 리턴됨
+	@ResponseBody // 얘 있어야함 꼭 ajax , fetch를 쓰든.. BoardVO boardVO, 쿼리스트링 형태로 보내올것임
+	public Map<String, Object> boardUpdateProcess(@RequestBody BoardVO boardVO) {
+		return boardService.updateBoardInfo(boardVO); // >map이 리턴됨 //map.put("result", isSuccessed); map.put("target",
+														// boardVO) // boolean 타입 >>
+
+	}
+
+	// 삭제 //@RequestParam name 속성있음
+	@GetMapping("boardDelete")
+	public String boardDelete(@RequestParam Integer bno) {
+		boardService.deleteBoardInfo(bno);
+		return "redirect:boardList";
 	}
 
 }

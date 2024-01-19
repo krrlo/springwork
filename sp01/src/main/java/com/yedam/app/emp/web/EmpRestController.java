@@ -22,7 +22,7 @@ import com.yedam.app.emp.service.EmpVO;
 @RestController // 각 메소드가 가지고있는 @ResponseBody 생략가능
 public class EmpRestController {
 
-	// REST방식 >>페이지를 반환하지 않기 때문에 @ResponseBody 써야한대
+	// REST방식 >> ajax용도일때 rest방식을 쓴대 페이지를 반환하지 않기 때문에 @ResponseBody 써야한대
 	// 모델을 사용하지 않음.서비스의 결과를 다이렉트로 넘겨버릴수 있기 때문ㅇ ㅔ ??????????
 	@Autowired
 	EmpService empService;
