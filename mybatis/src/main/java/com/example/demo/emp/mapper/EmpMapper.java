@@ -2,7 +2,7 @@ package com.example.demo.emp.mapper;
 
 import java.util.List;
 
-import com.example.demo.emp.EmpVO;
+import com.example.demo.emp.service.EmpVO;
 
 public interface EmpMapper {
 

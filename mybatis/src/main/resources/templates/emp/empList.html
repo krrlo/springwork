@@ -1,31 +1,81 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
 
 <head>
 <meta charset="UTF-8">
 <title>전체조회..</title>
+<style>
+.odd {
+	background-color: yellow;
+}
+
+.trbold {
+	font-weight: bold;
+}
+</style>
 </head>
 <body>
-			
-<div>전체건수[[${#lists.size(list)}]] </div>
-<div th:text="${#lists.size(list)}"></div>
-<table>
- <tr>
- <th>NO</th>
- <th>employee_id</th>
- <th>first_name</th>
- <th>last_name</th>
- <th>hire_date</th>
- </tr>
-<tr th:each="emp : ${list}">
+	<section layout:fragment="content">
 
- <td th:text="${empStat.count}"></td>
- <td th:text="${emp.employeeId}"></td>
- <td th:text="${emp.firstName}"></td>
- <td th:text="${emp.lastName}"></td>
- <td th:text="${emp.hireDate}"></td>
- </tr>
-</table>
 
+		<!-- /* <th:block th:each="emp: ${list}">
+		<span th:text="${emp.firstName}"></span>
+		<span th:text="${emp.lastName}"></span>
+		<br>
+	</th:block> */-->
+
+
+
+		<div>전체건수[[${#lists.size(list)}]]</div>
+		<div th:text="${#lists.size(list)}"></div>
+		<table>
+
+			<tr>
+				<th>NO</th>
+				<th>employee_id</th>
+				<th>name</th>
+				<th>hire_date</th>
+				<th>salary</th>
+				<th>grade</th>
+
+			</tr>
+
+			<th:block th:each="emp: ${list}">
+				<tr th:class="${empStat.odd} ? 'odd'"
+					th:classappend="${empStat.first} ? 'trbold'">
+
+					<td th:text="${empStat.count}"></td>
+					<td><a
+						th:href="@{info.do (employeeId=${emp.employeeId}, name=${emp.firstName})}"
+						th:text="${emp.employeeId}">100</a></td>
+					<td th:text="|${emp.firstName},${emp.lastName}|"></td>
+
+
+					<td th:text="${#dates.format(emp.hireDate, 'yyyy-MM')}"></td>
+					<td th:text="${emp.salary}"></td>
+
+					<td th:if="${emp.salary}>10000" th:text="a"></td>
+					<td th:unless="${emp.salary}>10000" th:text="b"></td>
+				</tr>
+			</th:block>
+
+		</table>
+
+		<div th:text="'<b>text</b>'"></div>
+		<div th:utext="'<b>text</b>'"></div>
+		<div>[[ ${list[0].firstName}]]</div>
+		<div>[( ${list[0].firstName})]</div>
+
+
+	</section>
+
+	<script th:inline="javascript">
+
+	let emps=[[${list}]]
+	
+
+	</script>
 </body>
 </html>

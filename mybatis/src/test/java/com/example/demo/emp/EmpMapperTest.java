@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.demo.emp.mapper.EmpMapper;
+import com.example.demo.emp.service.EmpVO;
 
 @SpringBootTest
 public class EmpMapperTest {
